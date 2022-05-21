@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+          <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script>
+AFRAME.registerComponent('registerevents', {
+ init: function () {
+ var marker = this.el;
+ marker.addEventListener('markerFound', function() { console.log('markerFound', marker.id); });
+ marker.addEventListener('markerLost', function() { console.log('markerLost', marker.id); });}});
+AFRAME.registerComponent('jump', {
+ init: function () {
+ var obj = this.el;
+ obj.addEventListener('click', function () {
+ this.setAttribute('position', (Math.random()-0.5)+ " 0.5 0");
+ });
+ }
+});
+
+  </script>
+  <body style="margin : 0px; overflow: hidden;">
+    <a-scene vr-mode-ui="enabled: false" embedded="" arjs="sourceType:
+webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;
+matrixCodeType: 3x3;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="">
+    <a-marker preset="hiro" id="marker-hiro" registerevents="" material="" arjs-anchor="" arjs-hit-testing="">
+    	<a-tetrahedron color="crimson" height="1" radius="0.5" jump="" geometry=""></a-tetrahedron>
+ </a-marker>
+ <a-marker preset="kanji" id="marker-kanji" registerevents="" material="" arjs-anchor="" arjs-hit-testing="">
+<a-dodecahedron color="violet" radius="0.6"	jump="" geometry=""></a-dodecahedron>
+ </a-marker>
+  <a-marker type='pattern' value='7' id='pattern' url="markercvetok.patt"registerevents="" material="" arjs-anchor="" arjs-hit-testing="" >
+ 	<a-box color ="violet" height = "1" jump="" geometry = ""></a-box>
+ </a-marker>
+  <a-entity camera><a-cursor></a-cursor></a-entity>
+</a-scene>
+</body>
+</html>
