@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+       <head><title> Моє вікно у three.js</title></head>
+       <body>       
+               <script src="https://threejs.org/build/three.min.js"></script>
+               <script src="https://raw.githack.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>
+               <a-scene>
+                       <script>
+                          function init() {
+                              scene = new THREE.Scene();
+                              camera = new THREE.PerspectiveCamera( 45,  window.innerWidth / window.innerHeight, 0.1, 1000);
+                              renderer = new THREE.WebGLRenderer();
+                              renderer.setSize(window.innerWidth, window.innerHeight);
+                              renderer.setClearColor(0x999999);
+                              //renderer.clear();
+                              document.body.appendChild(renderer.domElement);
+
+                              window.addEventListener('resize', function() {
+                                     renderer.setSize(window.innerWidth, window.innerHeight);
+                                     camera.aspect = window.innerWight/window.innerHeight;
+                                     camera.updateProjectionMatrix();
+
+                              });
+
+                              var loader = new THREE.TextureLoader();
+                              const geometry = new THREE.BoxGeometry();
+                              //const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: false} );
+                              const material = new THREE.MeshBasicMaterial( { map:loader.load("https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/water.jpg")} );
+                              const cube = new THREE.Mesh (geometry, material);
+                  
+                              scene.add (cube);
+
+                              cube.position.set(-3, 0, -3);
+                              camera.position.z=3;
+
+                              //var phi=0;
+
+
+                              var pyramidgeometry=new THREE.CylinderGeometry(0.8, 0.8, 2, 16);
+                              /*{color: 0xF3FFE2}*/
+                              var pyramidmaterial=new THREE.MeshBasicMaterial({ map:loader.load ("https://i.imgur.com/t5uN0yF.png")} );
+                              var pyramidmesh=new THREE.Mesh (pyramidgeometry, pyramidmaterial);
+                              scene.add (pyramidmesh);
+                              pyramidmesh.position.set(3, 0, -3);
+
+                              const sgeometry = new THREE.SphereGeometry( 15, 32, 16 );
+                              const smaterial = new THREE.MeshBasicMaterial( { map:loader.load("https://i.imgur.com/oQaH48p.png") } );
+                              const sphere = new THREE.Mesh( sgeometry, smaterial );
+                              scene.add( sphere );
+                               
+                              sphere.position.set(0, 1, -3);
+
+                              var lightOne=new THREE.AmbientLight(0xffff, 0.5);
+                              scene.add (lightOne);
+                              var lightTwo=new THREE.PointLight(0xffff, 0.5);
+                              scene.add (lightTwo);
+
+                             
+
+                              controls = new THREE.OrbitControls(camera,renderer.domElement);
+                              //controls.autoRotate=true;
+
+                          }
+                          
+
+                function animate() 
+                {
+                    controls.update();
+                    renderer.render(scene, camera);
+
+                    requestAnimationFrame(animate);
+                }
+                       
+                init();
+                requestAnimationFrame(animate);
+                </script>
+             </a-scene> 
+       </body>
+</html>
+
+
+
+
+
